@@ -17,6 +17,6 @@ public func Activate(object pObj)
 //public func IsInteractiveItem(){ return true; }
 public func MenuQueryCancel(){ return true; }
 
-public func GetInventoryActivateText(){ return "Lesen"; }
+public func GetInventoryActivateText(){ return "$TxtRead$"; }
 public func CanBeActivated(){ return "true"; }
 
