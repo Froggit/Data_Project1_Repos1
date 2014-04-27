@@ -1,0 +1,28 @@
+[PlayerInfoList]
+LastPlayerID=3
+
+  [Client]
+  ID=0
+  Flags=Initial
+
+    [Player]
+    Name="Gegner"
+    Filename="ScriptPlr-1.c4p"
+    Flags=Joined|AttributesFixed|NoScenarioInit|NoEliminationCheck|Invisible
+    ID=1
+    Type=Script
+    Color=65535
+    SavgamePlayer=1
+    GameNumber=0
+    GameJoinFrame=0
+
+    [Player]
+    Name="Freunde"
+    Filename="ScriptPlr-2.c4p"
+    Flags=Joined|AttributesFixed|NoScenarioInit|NoEliminationCheck|Invisible
+    ID=2
+    Type=Script
+    Color=65535
+    SavgamePlayer=2
+    GameNumber=1
+    GameJoinFrame=0

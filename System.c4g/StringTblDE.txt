@@ -1,0 +1,13 @@
+AttributeStrength=Stärke
+AttributeDexterity=Geschick
+AttributeMana=Mana
+AttributeHealth=Vitalität
+
+PerkMelee=Nahkampf
+PerkMeleeDesc=
+PerkRanged=Fernkampf
+PerkRangedDesc=
+PerkMagic1=
+PerkMagic1Desc=
+
+NPCQueen=Königin
