@@ -1,0 +1,12 @@
+[Material]
+Name=EarthGrass
+Color=39,72,38,80,98,40,80,116,73
+Shape=2
+Density=50
+Friction=80
+DigFree=1
+MaxAirSpeed=100
+MaxSlide=1
+Corrode=75
+Soil=1
+ 

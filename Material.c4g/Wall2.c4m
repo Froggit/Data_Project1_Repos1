@@ -1,0 +1,7 @@
+[Material]
+Name=Wall2
+Color=60,75,80,75,90,95,90,90,100
+Shape=2
+Placement=5
+TextureOverlay=SmallRock
+OverlayType=1

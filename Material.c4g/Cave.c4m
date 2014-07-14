@@ -1,0 +1,7 @@
+[Material]
+Name=Cave
+Color=46,46,46,60,60,60,80,80,80
+Shape=2
+Placement=5
+TextureOverlay=Ridge
+OverlayType=1

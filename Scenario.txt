@@ -1,6 +1,6 @@
 [Head]
 Icon=29
-Title=Armalion II Remake M
+Title=Armalion II Remake 3 M
 Version=4,9,10,4
 NoInitialize=1
 ForcedGfxMode=1

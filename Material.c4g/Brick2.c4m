@@ -1,0 +1,8 @@
+[Material]
+Name=Brick2
+Color=45,60,70
+Shape=0
+Density=50
+Placement=60
+TextureOverlay=Brick
+OverlayType=1

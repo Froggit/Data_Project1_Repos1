@@ -1,0 +1,12 @@
+[Material]
+Name=Earth2
+Color=120,85,40,127,95,63,147,111,75
+Shape=2
+Density=50
+Friction=80
+DigFree=1
+MaxAirSpeed=100
+MaxSlide=1
+Corrode=75
+Soil=1
+ 

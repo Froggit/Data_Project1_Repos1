@@ -1,0 +1,12 @@
+[Material]
+Name=Earth3
+Color=70,50,5,115,55,10,150,75,15
+Shape=2
+Density=50
+Friction=80
+DigFree=1
+MaxAirSpeed=100
+MaxSlide=1
+Corrode=75
+Soil=1
+ 
