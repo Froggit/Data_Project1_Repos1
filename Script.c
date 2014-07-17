@@ -148,6 +148,11 @@ func DoStartSzen()
 	gNPCInuk2->~SetName("Jallik");
 	gNPCInuk2->SetPosition(4465,340);
 	AttachDialogue(gNPCInuk2,"Jallik");
+	// Er hat 3 Fischfässer
+	CreateContents(TIM1,gNPCInuk2); // a dummy such that he does not collect the last barrel after ejecting it
+	CreateContents(FBRL,gNPCInuk2);
+	CreateContents(FBRL,gNPCInuk2);
+	CreateContents(FBRL,gNPCInuk2);
 
 	// Magier erstellen
 	gNPCCourtmage = CreateObject( MAGE,0,0,giPlrFriend );

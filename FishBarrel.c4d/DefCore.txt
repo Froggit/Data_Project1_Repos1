@@ -11,7 +11,7 @@ Vertices=4
 VertexX=-4,3,-4,3
 VertexY=-4,-4,3,3
 VertexFriction=80,80,80,80
-Value=5
+Value=20
 Mass=20
 Components=WOOD=2
 Picture=8,0,64,64
