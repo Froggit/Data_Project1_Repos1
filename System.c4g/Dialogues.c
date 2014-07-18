@@ -7,6 +7,7 @@ static const gDialogue_TalkedToBardrik = "Bardrik";
 static const gDialogue_AskedJallikAboutNames = "Jallik";
 static const gDialogue_AskedJallikAboutBardrik = "JallikBardrik";
 static const gDialogue_BardrikName = "Spaßvogel-Axt-Verkäufer";//"Äxte-Verschenker-und-Reisende-Täuscher";
+static const gDialogue_JallikProblems = "JallikProblems";
 
 func MsgDialogueEboreus() { return [
 		[0,-1,0,["Guten Tag","Seid gegrüßt","Hallo, ich bin Eboreus"],0,MCMC],
@@ -149,9 +150,8 @@ func MsgDialogueArmin() { return [
 		StdDlgArrayExitCancel()
 ];}
 
-// TODO: Infos zum OBW
 func MsgDialogueBernika() { return [
-		[0,-1,0,"Hallo, ich bin die Wirtin Bernika",0,NONE,0,0,["SetStartDialogue(pSpeaker,1)",StdDlgVar("Create","FishBarrel","=0")]],
+		[0,-1,0,"Hallo, ich bin die Wirtin Bernika",0,NONE,0,0,["SetStartDialogue(pSpeaker,1)",StdDlgVar("Create","FishBarrel","=0"),StdDlgVar("Create","Cancel","=1")]],
 		[1,-1,0,["Schön Euch wiederzusehen.","Seid gegrüßt!","Schön Euch zu sehen!"],0,MCMC],
 		[2,[0,1],"Was habt Ihr denn auf der Speisekarte?","Heute haben wir Spanferkel oder Rinderbraten. Dazu könnt Ihr euch so viel Sauerkraut, Brot, Schmalz und Suppe nehmen, wie Ihr wollt.",0,0,0,["days%3 == 0"]],
 		[3,[0,1],"Was habt Ihr denn auf der Speisekarte?","Ich kann euch Schweinerippchen empfehlen, außerdem haben wir heute Rindereintopf. Nehmt euch so viel Brot, Grütze oder Kohl dazu, wie Euch beliebt.",0,0,0,["days%3 == 1"]],
@@ -167,13 +167,17 @@ func MsgDialogueBernika() { return [
 		    [14,[11,12,13,10,1,16,17],"Dann muss ich wohl selbst welchen auftreiben.","Das würdet Ihr tun? Vielen Dank!",0,0,0,["GetQuestStage(\"SomethingFishy\",pTarget)",StdDlgVar("!","B",""),"gDeliveredFishBarrels<2"],[StdDlgVar("Create","B","=1")]],
 		    [15,[11,12,13,10,1,14,16,17],"Wie viel Fisch braucht Ihr denn?","Am besten ein ganzes Fass! Die anderen Gäste erwarten meine Fischgerichte schon dringend.",0,0,0,["GetQuestStage(\"SomethingFishy\",pTarget)",StdDlgVar("!","B",""),"gDeliveredFishBarrels<2"],[StdDlgVar("Create","B","=1")]],
 		// Belohnung zur Fisch-Quest
-		[16,[0,1,10],"Ihr könnt sicher Fisch gebrauchen.","Ja, tatsächlich! Der Fisch ist hier seit langer Zeit ausverkauft.",0,0,[true,0,0,0,false,0,0,"SomethingFishy"],["GetQuestStage(\"SomethingFishy\",pTarget)==0","gObjFishBarrel=(pTarget->~HasItem(FBRL))"],["ActivateQuest(\"SomethingFishy\",pTarget)"]],
-		[17,[1,10,16,17],"Hier, ich habe Euch etwas Fisch besorgt.",["Sehr gut! Hier habt Ihr eine kleine Belohnung.","Danke. Hier, für Euch.","Danke. Habt Ihr noch mehr?"],0,0,[true,0,0,0,false,0,0,"SomethingFishy"],["GetQuestStage(\"SomethingFishy\",pTarget)==1","gObjFishBarrel=(pTarget->~HasItem(FBRL))","gDeliveredFishBarrels<2"],["SetQuestStage(\"SomethingFishy\",2,pTarget,true)","!gObjFishBarrel||RemoveObject(gObjFishBarrel)","gDeliveredFishBarrels++"]],
-		[18,[1,10,16,17],"Hier, ich habe Euch etwas Fisch besorgt.","Habt vielen Dank! Jetzt reicht der Fisch für eine Weile!",0,0,[true,0,0,0,false,0,0,"SomethingFishy"],["GetQuestStage(\"SomethingFishy\",pTarget)==1","gObjFishBarrel=(pTarget->~HasItem(FBRL))","gDeliveredFishBarrels>=2"],["SetQuestStage(\"SomethingFishy\",3,pTarget,true)","!gObjFishBarrel||RemoveObject(gObjFishBarrel)","gDeliveredFishBarrels++"]],
+		[16,[0,1,10],"Ihr könnt sicher Fisch gebrauchen.","Ja, tatsächlich! Der Fisch ist hier seit langer Zeit ausverkauft.",0,0,[true,0,0,0,false,0,0,"SomethingFishy"],["GetQuestStage(\"SomethingFishy\",pTarget)==0",StdDlgVar("","FishBarrel","=(pTarget->~HasItem(FBRL))")],["ActivateQuest(\"SomethingFishy\",pTarget)"]],
+		[17,[1,10,16,17],"Hier, ich habe Euch etwas Fisch besorgt.",["Sehr gut! Hier habt Ihr eine kleine Belohnung.","Danke. Hier, für Euch.","Danke. Habt Ihr noch mehr?"],0,0,[true,0,0,0,false,0,0,"SomethingFishy"],["GetQuestStage(\"SomethingFishy\",pTarget)==1",StdDlgVar("","FishBarrel","=(pTarget->~HasItem(FBRL))"),"gDeliveredFishBarrels<2"],["SetQuestStage(\"SomethingFishy\",2,pTarget,true)",StdDlgVarSafeRemoveObject("FishBarrel"),"gDeliveredFishBarrels++"]],
+		[18,[1,10,16,17],"Hier, ich habe Euch etwas Fisch besorgt.","Habt vielen Dank! Jetzt reicht der Fisch für eine Weile!",0,0,[true,0,0,0,false,0,0,"SomethingFishy"],["GetQuestStage(\"SomethingFishy\",pTarget)==1",StdDlgVar("","FishBarrel","=(pTarget->~HasItem(FBRL))"),"gDeliveredFishBarrels>=2"],["SetQuestStage(\"SomethingFishy\",3,pTarget,true)",StdDlgVarSafeRemoveObject("FishBarrel"),"gDeliveredFishBarrels++"]],
 		[19,[1,10,18],"Ich habe wieder Fisch, braucht Ihr noch was?","Ein kleiner Vorrat kann nicht schaden, ich kann euch aber nicht mehr so viel Geld dafür geben.",0,0,0,["gDeliveredFishBarrels>=2","GetQuestStage(\"SomethingFishy\",pTarget)<0",StdDlgVar("","FishBarrel","=(pTarget->~HasItem(FBRL))"),StdDlgVar("!","UnlockSellFish","")], [StdDlgVar("Create","UnlockSellFish","=1")]],
-		[20,[1,10,18,19], Format("{{FBRL}} Fische verkaufen %d{{GOLD}}",gFishBarrel_PriceFactor_Sell*GetValue(0,FBRL)/100), ["Danke.", "Gerne wieder!", "Habt Ihr noch mehr?"], 0, 0, 0, [StdDlgVar("","UnlockSellFish","==1"),"pTarget->~HasItem(FBRL)",StdDlgVar("","FishBarrel","=(pTarget->~HasItem(FBRL))")], [StdDlgVarSafeRemoveObject("FishBarrel"),Format("pTarget->~DoMoney(%d)",gFishBarrel_PriceFactor_Sell*GetValue(0,FBRL)/100)]],
+		[20,[1,10,18,19,20], Format("{{FBRL}} Fische verkaufen %d{{GOLD}}",gFishBarrel_PriceFactor_Sell*GetValue(0,FBRL)/100), ["Danke.", "Gerne wieder!", "Habt Ihr noch mehr?"], 0, 0, 0, [StdDlgVar("","UnlockSellFish","==1"),"pTarget->~HasItem(FBRL)",StdDlgVar("","FishBarrel","=(pTarget->~HasItem(FBRL))")], [StdDlgVarSafeRemoveObject("FishBarrel"),Format("pTarget->~DoMoney(%d)",gFishBarrel_PriceFactor_Sell*GetValue(0,FBRL)/100)]],
+		// OBW-Info
+		[21,[0,1], "Ist in den letzten Tagen etwas merkwürdiges vorgefallen?", "Hmm, ja, tatsächlich. Ich habe gehört, dass von einem Tag auf den anderen die Bettler aus dem Nachbarort verschwunden sind.", 0, 0, [true,0,0,0,false,0,0,"MainQuest"], [StdDlgQuestStage("Get","MainQuest","==gQuestMainStageSearch"), StdDlgVar("!","InfoOBW","")], StdDlgVar("Create","InfoOBW","=1", StdDlgVar("", "Cancel", "=0"), "gQuestMain_Info_Bernika++")],
+		[22,21,"Weiter", "Erst waren sie da, dann waren sie weg... sogar der Lahme!", 0, LMM2, 0, 0, StdDlgVar("","Cancel","=1")],
 		// Ende
-		StdDlgArrayExitAlways()
+		//StdDlgArrayExitAlways()
+		StdDlgArrayExitCancel()
 ];}
 
 
@@ -354,7 +358,7 @@ func MsgDialogueBardrik() { return [
           [10,[0,1,7,9],"Was bedeutet Euer Name?",["Das geht Euch nichts an.","Das sage ich nicht."],0,0,0,[DlgObjVar("",gDialogue_TalkedToBardrik,"==0"),DlgObjVar("",gDialogue_AskedJallikAboutNames,"==1")],DlgObjVar("Create",gDialogue_TalkedToBardrik,"=1")],
           [11,[0,1,7,9],Format("Ihr heißt %s",gDialogue_BardrikName),"Tja, jetzt wisst Ihr es. Na gut, was wollt ihr kaufen?",0,0,0,[DlgObjVar("",gDialogue_AskedJallikAboutBardrik,"==1",StdDlgVar("","CanBuy","==0"))],StdDlgVar("Create","CanBuy","=1")],
           // Quest?
-          [99,[0,1,2,3,4,5,6,7,8,9],"Habt Ihr sonst irgendwelche Probleme?","Nein, eigentlich nicht. Fragt mal meinen Freund Jallik, der fischt unten an der Küste im Osten.",0,0,0,StdDlgVar("","C","==0"),StdDlgVar("Create","C","=1")],
+          [99,[0,1,2,3,4,5,6,7,8,9],"Habt Ihr sonst irgendwelche Probleme?","Nein, eigentlich nicht. Fragt mal meinen Freund Jallik, der fischt unten an der Küste im Osten.",0,0,0,StdDlgVar("","C","==0"),[StdDlgVar("Create","C","=1"),DlgObjVar("",gDialogue_JallikProblems,"=1")]],
   		StdDlgArrayExitAlways()
 ];}
 
@@ -378,6 +382,7 @@ func MsgDialogueJallik() { return [
             //[12,[10,11,0,1,12,13],"{{FBRL}} Fische kaufen: 20{{GOLD}}",["Hier, bitteschön","Gerne wieder!","Viel Spaß damit."],0,[0, 0, 0, 0, 0, 0, 1],0,[StdDlgVar("","E","==1"),"(pTarget->~GetMoney())>=20","pSpeaker->~FindContents(FBRL)"],["pTarget->DoMoney(-20)","Exit(pSpeaker->~FindContents(FBRL),0,5)"]],
             //[13,[10,11,0,1,12,13],"{{FBRL}} Fische kaufen: 20{{GOLD}}","",0,[0, RGB(255,0,0), 0, 0, 0, 0, 1],0,[StdDlgVar("","E","==1"),"(pTarget->~GetMoney())<20","pSpeaker->~FindContents(FBRL)"],0],
             [12,[10,11,0,1,12],Format("{{FBRL}} Fische kaufen: %d{{GOLD}}",GetValue(0,FBRL)),["Hier, bitteschön","Gerne wieder!","Viel Spaß damit."],0,[0, 0, 1, 0, 0, 0, 1],0,[StdDlgVar("","E","==1"),Format("(pTarget->~GetMoney())>=%d",GetValue(0,FBRL)),"pSpeaker->~FindContents(FBRL)"],["pTarget->DoMoney(-20)","Exit(pSpeaker->~FindContents(FBRL),0,5)"]],
+            [13,-1,"Bardrik meinte Ihr habt vielleicht Probleme","Wirklich? Ich kann mich nicht beschweren.",0,0,0,[StdDlgVar("",gDialogue_JallikProblems,"==1"),StdDlgVar("!","Problems","")],[StdDlgVar("Create","Problems","=1")]],
 	    // TODO: nach der Höhle hinter ihm fragen können
   		StdDlgArrayExitAlways()
 ];}

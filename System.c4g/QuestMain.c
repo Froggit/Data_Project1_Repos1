@@ -4,6 +4,8 @@
 
 static const gQuestMainStageSearch = 23;
 
+static gQuestMain_Info_Bernika;
+
 func CreateQuests()
 {
 	CreateQuest("MainQuest");
