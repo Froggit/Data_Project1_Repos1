@@ -133,10 +133,9 @@ func MsgDialogueAncientScroll() { return [
 		StdDlgArrayExitAlways()
 ];}
 
-// TODO
-// - nach Quest-Aktivierung gehts nicht weiter
+
 func MsgDialogueArmin() { return [
-		[0,-1,0,"Hee, I bin da Armin!",0,NONE,0,0,["SetStartDialogue(pSpeaker,1)",StdDlgVar("Create","Cancel","=1")]],
+		[0,-1,0,"Hee, I bin da Armin!",0,NONE,0,0,["SetStartDialogue(pSpeaker,1)",StdDlgVar("Create","Cancel","=1"), StdDlgVar("Create","DayLastReward","=0")]],
 		[1,-1,0,["Servus!","Servus oide Wurschthaut!","Schee di zum seng","Sigd ma di a amoi wida!"],0,MCMC],
 		// Husky-Quest
 		[2,[0,1],"Hallo.","Hee du! Da bei de Baam is a greisligs Viech, stich des ab!",0,0,[true,0,0,0,false,0,0,"HuskyHunt",true],"GetQuestStage(\"HuskyHunt\",pTarget)==0","ActivateQuest(\"HuskyHunt\",pTarget)"],
@@ -147,6 +146,13 @@ func MsgDialogueArmin() { return [
 		    [7,[0,1,2,5],"Ich werde es bezwingen!","",0,0,-1,["GetQuestStage(\"HuskyHunt\",pTarget)",StdDlgVar("!","B","")],[StdDlgVar("Create","B","=1"),StdDlgVar("","Cancel","=1"),"StopDialogue(pTarget)"]],
 		// Belohnung für die Husky-Quest
 		//"Da hast was zum Essn, des war sicha a mords Abeit."
+		[17,[0,1],"Das Tier ist tot!","Sauba! Do hast was zum Essen, des war sicha a mords Abeit. Konnst no öfta wos ham...",0,0,0,[StdDlgQuestStage("Get","HuskyHunt","==gQuestStageFinished"),StdDlgVar("!","UnlockReward","")],[StdDlgVar("Create","UnlockReward","=1"), StdDlgVar("","DayLastReward","=days"), "gNPCFarmer->~Exit(CreateContents(RMET,gNPCFarmer),0,5)"]],
+		[18,[0,1],"Kriege ich noch was zu essen?","Ja, i hob grad wos da.",0,0,0,["days%2 == 0",StdDlgVar("","UnlockReward","==1"),StdDlgVar("","DayLastReward","!=days")],[StdDlgVar("","DayLastReward","=days"), "Exit(CreateContents(RMET,gNPCFarmer),0,5)"]],
+		[18,[0,1],"Kriege ich noch was zu essen?","Na, heid net. Moagn wieda.",0,0,0,["days%2 == 1",StdDlgVar("","UnlockReward","==1")],["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
+		[19,[0,1],"Kriege ich noch was zu essen?","Na, du host heid scho was kriagt!",0,0,0,["days%2 == 0", StdDlgVar("","UnlockReward","==1"),StdDlgVar("","DayLastReward","==days")],["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
+		// OBW-Info
+		[21,[0,1], "Ist sonst etwas besonderes passiert?", "Scho... D'Vegl fliang zur a Inse' im Himme'. Des host no ned gseng, oda?", 0, 0, [true,0,0,0,false,0,0,"MainQuest"], [StdDlgQuestStage("Get","MainQuest","==gQuestMainStageSearch"),StdDlgQuestStage("Get","HuskyHunt","<0"), StdDlgVar("!","InfoOBW","")], [StdDlgVar("Create","InfoOBW","=1", StdDlgVar("", "Cancel", "=0"), "gQuestMain_Info_Armin++")]],
+		[22,21,"Insel im Himmel?", "Interessant...", -1, 0, [true,0,0,0,false,0,0,"MainQuest"], 0, StdDlgVar("","Cancel","=1")],
 		StdDlgArrayExitCancel()
 ];}
 

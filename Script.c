@@ -92,6 +92,7 @@ func DoStartSzen()
 	gNPCFarmer->~SetName("Armin");
 	gNPCFarmer->SetPosition(1840,765);
 	AttachDialogue(gNPCFarmer,"Armin");
+	CreateContents(TIM1,gNPCFarmer); // a dummy such that he does not collect items
 
 	// Wirtin erstellen
 	gNPCInnkeeper = CreateObject( CLNK,0,0,giPlrFriend );
