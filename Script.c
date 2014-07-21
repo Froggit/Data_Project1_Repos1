@@ -36,6 +36,13 @@ func DoStartSzen()
 
 	gDrawbridge = FindObject(CPT3);
 
+	// Glühwürmchen erstellen
+
+	CreateObject(FFAC, 627, 705, -1);
+	CreateObject(FFAC, 1905, 750, -1);
+	CreateObject(FFAC, 2170, 745, -1);
+	CreateObject(FFAC, 2675, 490, -1);
+
 	// Königin erstellen
 	gNPCQueen = CreateObject( _PRC,0,0,giPlrFriend);
 	MakeCrewMember( gNPCQueen, giPlrFriend );
@@ -49,7 +56,7 @@ func DoStartSzen()
 	MakeCrewMember( gNPCWitch, giPlrFriend );
 	gNPCWitch->~SetName("Hexe");
 	gNPCWitch->~SetPosition(1170,750);
-	AttachDialogue(gNPCWitch,"Hexe");
+	AttachDialogue(gNPCWitch,"Alvelin");
 
 	// Schmied erstellen
 	gNPCBlacksmith = CreateObject( CLNK,0,0,giPlrFriend );
@@ -112,7 +119,8 @@ func DoStartSzen()
 	gNPCGuard1 = CreateObject( CLNK,0,0,giPlrFriend );
 	MakeCrewMember( gNPCGuard1, giPlrFriend );
 	gNPCGuard1->~SetName("Helmar");
-	gNPCGuard1->SetPosition();
+	gNPCGuard1->SetPosition(1615, 769);
+	gNPCGuard1->SetDir(1);
 	AttachDialogue(gNPCGuard1,"Helmar");
 
 	// Wache erstellen
@@ -126,7 +134,7 @@ func DoStartSzen()
 	gNPCGuard3 = CreateObject( CLNK,0,0,giPlrFriend );
 	MakeCrewMember( gNPCGuard3, giPlrFriend );
 	gNPCGuard3->~SetName("Radulf");
-	gNPCGuard3->SetPosition();
+	gNPCGuard3->SetPosition(225, 448);
 	AttachDialogue(gNPCGuard3,"Radulf");
 
 	// Holzfäller erstellen

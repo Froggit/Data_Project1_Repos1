@@ -45,8 +45,8 @@ Holzfäller Answin:
 - Axtquest
 die Hexe hat seine Axt gefunden, nachdem er sie weggeworfen hat. Sie händigt sie einem aus, wenn man ihr einen Gefallen tut.  
 
-Hexe Unbekannt:
-- Hexenquest: Sie hatte früher ein Haus in der Stadt, aber Bürger XXX hat sie verbannt. Vllt mit Torwächter reden?
+Hexe Alvelin:
+- Hexenquest: Sie hatte früher ein Haus in der Stadt, aber Bürger Odilbert hat sie verbannt. Vllt mit Torwächter reden?
 - Specials für Magier + Magier
 - (OBW) auf den Dörfern erheben sich die Toten (sehr frische Tote)
 - läuft nachts im Wald rum und hat coole Dialoge ^^

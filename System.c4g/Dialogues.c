@@ -134,6 +134,23 @@ func MsgDialogueAncientScroll() { return [
 ];}
 
 
+func MsgDialogueAlvelin() { return [
+		[0,-1,0,"Hallo, ich bin Alvelin, und wer seid Ihr?.",0,NONE,0,0,"SetStartDialogue(pSpeaker,1)"],
+		[1,-1,0,["Schön Euch wiederzusehen.","Seid gegrüßt!","Schön Euch zu sehen!"],0,MCMC],
+		[2, [0,1],"Was macht ihr hier draußen?","Ich suche Kräuter. Hier im Wald wächst so einiges Nützliches.",0,0,0,StdDlgVar("!","AskedOutside",""),StdDlgVar("Create", "AskedOutside", "=1")],
+		 [3, [2,1],"Achso, dann störe ich nicht weiter.", "", 0, 0, -1, ["IsDay()",StdDlgVar("","AskedOutside", "==1")], [StdDlgVar("","AskedOutside","=2"),"StopDialogue(pTarget)"]],
+		 [4, [2,1],"Ihr seid immernoch hier?","Na klar, Kräuter und so.", 0, 0, 0, ["IsNight()",StdDlgVar("Inside(","AskedOutside","1,2)")],[StdDlgVar("","AskedOutside","=3"),"StopDialogue(pTarget)"]],
+		 [5, [2,1],"Hier stimmt doch was nicht. Wieso seid Ihr nachts hier unterwegs?","Naja, es ist so: Ich wurde aus der Stadt verbannt.",0,0,0,[StdDlgVar("","AskedOutside","==3")],[StdDlgVar("","AskedOutside","=4")]],
+            [6,[5,1],"Warum wurdet Ihr verbannt?"],
+            [7,[5,1],"Wollt Ihr weiter im Wald wohnen?"],
+            [8,[5,1],"Ich könnte Euch helfen, zurück in die Stadt zu kommen"],
+         [20,[0,1],"Habt Ihr Answin verflucht?"],
+         [21,[0,1],"Habt Ihr zufällig eine Axt gesehen?"],
+		StdDlgArrayExitAlways()
+];}
+
+
+
 func MsgDialogueArmin() { return [
 		[0,-1,0,"Hee, I bin da Armin!",0,NONE,0,0,["SetStartDialogue(pSpeaker,1)",StdDlgVar("Create","Cancel","=1"), StdDlgVar("Create","DayLastReward","=0")]],
 		[1,-1,0,["Servus!","Servus oide Wurschthaut!","Schee di zum seng","Sigd ma di a amoi wida!"],0,MCMC],

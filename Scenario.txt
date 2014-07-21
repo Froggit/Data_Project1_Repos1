@@ -54,8 +54,8 @@ Layers=Rock=7;Granite=4;Water-Smooth=5;Oil-Smooth=5;Earth-Rough=50;Earth-Smooth=
 NewStyleLandscape=2
 
 [Weather]
-Climate=100,0,0,100
-StartSeason=100,0,0,100
+Climate=0,0,0,100
+StartSeason=50,0,0,100
 YearSpeed=0,0,0,100
 Wind=1,100,-100,100
 
