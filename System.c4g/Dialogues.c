@@ -8,6 +8,7 @@ static const gDialogue_AskedJallikAboutNames = "Jallik";
 static const gDialogue_AskedJallikAboutBardrik = "JallikBardrik";
 static const gDialogue_BardrikName = "Spaßvogel-Axt-Verkäufer";//"Äxte-Verschenker-und-Reisende-Täuscher";
 static const gDialogue_JallikProblems = "JallikProblems";
+static const gDialogue_HeardOfWitch = "HeardOfWitch";
 
 func MsgDialogueEboreus() { return [
 		[0,-1,0,["Guten Tag","Seid gegrüßt","Hallo, ich bin Eboreus"],0,MCMC],
@@ -61,7 +62,7 @@ func MsgDialogueNestor() { return [
 					[29,[20,21,22,23,24,25,26,27,28],"Weiter!!","",-1,[LMM2,0,0,2,4],-1,"true",[StdDlgVar("","Intro","=1337"),StdDlgVar("","Cancel","=1"),"StopDialogue(pTarget)","StartDialogue(pTarget)"]],
 		[30,0,"Wo können wir Hinweise finden?","Die Leute in der Stadt haben vielleicht etwas gesehen. Hört euch dort einmal um!",0,0,0,"GetQuestStage(\"MainQuest\",pTarget) == gQuestMainStageSearch"],
 
-		[998,[30],"Weiter","",0,[LMM2,0,0,2,4],-1,0,["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
+		[998,[30],"Weiter","",0,StdDlgIconContinue(),-1,0,["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
 		//[999,-1,"Abbrechen","",0,[MCMX,0,0,0,0,-1],-1,["!LocalN2(Format(\"DlgVar%d\",ObjectNumber(pTarget)),pSpeaker) || LocalN2(Format(\"DlgVar%d\",ObjectNumber(pTarget)),pSpeaker) == 1337"],"StopDialogue(pTarget)"]
 		StdDlgArrayExitCancel()
 ];}
@@ -113,9 +114,9 @@ func MsgDialogueLinnert() { return [
 		// Quest: Verschollen
 		[2,[0,1],"Was macht Ihr hier?","Ich begleite meinen Kumpel, er will hier einen Schatz finden.",0,0,0,StdDlgVar("!","A",""),StdDlgVar("Create","A","=1")],
 			[3,[0,1,2],"Wenn Ihr hier rumsitzt, dann findet Ihr den Schatz sicher nicht","Naja, wir suchen den Schatz auch nicht selbst. Wir haben zwei Abenteurer bezahlt, die ihn für uns holen.",0,0,0,[StdDlgVar("","A",""),StdDlgVar("!","B","")],StdDlgVar("Create","B","")],
-			[4,3,"Weiter","Vor einer Woche sind sie den Schacht runter...|Seitdem haben wir nichts mehr von Ihnen gehört.",0,[LMM2,0,0,2,4]],
-			[5,4,"Weiter","Ich glaube ja, dass sie sich nachts einfach mit dem Schatz aus dem Staub gemacht haben.",0,[LMM2,0,0,2,4]],
-				[6,5,"Weiter","Wenn Ihr sie findet, und sie den Schatz gestohlen haben, dann würde ich den Gewinn mit Euch teilen.",0,[LMM2,0,0,2,4],0,0,StdDlgVar("","B","=2")],
+			[4,3,"Weiter","Vor einer Woche sind sie den Schacht runter...|Seitdem haben wir nichts mehr von Ihnen gehört.",0,StdDlgIconContinue()],
+			[5,4,"Weiter","Ich glaube ja, dass sie sich nachts einfach mit dem Schatz aus dem Staub gemacht haben.",0,StdDlgIconContinue()],
+				[6,5,"Weiter","Wenn Ihr sie findet, und sie den Schatz gestohlen haben, dann würde ich den Gewinn mit Euch teilen.",0,StdDlgIconContinue(),0,0,StdDlgVar("","B","=2")],
 				[7,[1,6],"Ich werde nach den Abenteurern suchen.","Danke.",0,0,0,[StdDlgVar("","A",""),"GetQuestStage(\"MissingLooters\",pTarget,pSpeaker)==0"],"ActivateQuest(\"MissingLooters\",pTarget)"],
 		// Quest: Verschollen - Belohnung
 		[8,1,"Ich habe die Abenteurer gefunden","Ja? Und was ist mit dem Schatz?",0,0,[true,0,0,0,false,0,0,"MissingLooters"],["GetQuestStage(\"MissingLooters\",pTarget)==5",StdDlgVar("!","C","")],StdDlgVar("Create","C","=1")],
@@ -135,18 +136,34 @@ func MsgDialogueAncientScroll() { return [
 
 
 func MsgDialogueAlvelin() { return [
-		[0,-1,0,"Hallo, ich bin Alvelin, und wer seid Ihr?.",0,NONE,0,0,"SetStartDialogue(pSpeaker,1)"],
+		[0,-1,0,"Hallo, ich bin Alvelin, und wer seid Ihr?.",0,NONE,0,0,["SetStartDialogue(pSpeaker,1)", "pSpeaker->~SetName(\"Alvelin\")", StdDlgVar("Create","Cancel","=1")]],
 		[1,-1,0,["Schön Euch wiederzusehen.","Seid gegrüßt!","Schön Euch zu sehen!"],0,MCMC],
-		[2, [0,1],"Was macht ihr hier draußen?","Ich suche Kräuter. Hier im Wald wächst so einiges Nützliches.",0,0,0,StdDlgVar("!","AskedOutside",""),StdDlgVar("Create", "AskedOutside", "=1")],
-		 [3, [2,1],"Achso, dann störe ich nicht weiter.", "", 0, 0, -1, ["IsDay()",StdDlgVar("","AskedOutside", "==1")], [StdDlgVar("","AskedOutside","=2"),"StopDialogue(pTarget)"]],
-		 [4, [2,1],"Ihr seid immernoch hier?","Na klar, Kräuter und so.", 0, 0, 0, ["IsNight()",StdDlgVar("Inside(","AskedOutside","1,2)")],[StdDlgVar("","AskedOutside","=3"),"StopDialogue(pTarget)"]],
-		 [5, [2,1],"Hier stimmt doch was nicht. Wieso seid Ihr nachts hier unterwegs?","Naja, es ist so: Ich wurde aus der Stadt verbannt.",0,0,0,[StdDlgVar("","AskedOutside","==3")],[StdDlgVar("","AskedOutside","=4")]],
-            [6,[5,1],"Warum wurdet Ihr verbannt?"],
-            [7,[5,1],"Wollt Ihr weiter im Wald wohnen?"],
-            [8,[5,1],"Ich könnte Euch helfen, zurück in die Stadt zu kommen"],
-         [20,[0,1],"Habt Ihr Answin verflucht?"],
-         [21,[0,1],"Habt Ihr zufällig eine Axt gesehen?"],
-		StdDlgArrayExitAlways()
+		[2, [0,1],"Was macht ihr hier draußen?","Ich suche Kräuter. Hier im Wald wächst so einiges Nützliches.",0,0,															0,											[StdDlgVar("!","AskedOutside","")],																[StdDlgVar("Create", "AskedOutside", "=1")]],
+		 [3, [2,1],"Achso, dann störe ich nicht weiter.", "", 0, 0, 																											-1,											["IsDay()",StdDlgVar("","AskedOutside", "==1")], 												[StdDlgVar("","AskedOutside","=2"),"StopDialogue(pTarget)"]],
+		 [4, [2,1],"Ihr seid immernoch hier?","Na klar, Kräuter und so.", 0, 0, 																								-1,											["IsNight()",StdDlgVar("Inside(","AskedOutside",", 1, 2)")],									[StdDlgVar("","AskedOutside","=3"),"StopDialogue(pTarget)"]],
+		 [5, [2,1],"Hier stimmt doch was nicht. Wieso seid Ihr nachts hier unterwegs?","Naja, es ist so: Ich wurde aus der Stadt verbannt. Hexerei und so.",0,0,				[true,0,0,0,false,0,0,"HomeForWitches"],	[StdDlgVar("","AskedOutside","==3"),StdDlgQuestStage("Get","HomeForWitches","==0")],			[StdDlgVar("","AskedOutside","=4"),"ActivateQuest(\"HomeForWitches\",pTarget)"]],
+            [6,[5,7,8,9,1],"Hexerei?","Ja. Man beschuldigte mich, jemanden verflucht zu haben, da warf Odilbert mich raus.",0,0,												0,											[StdDlgVar("!","AskedWitchcraft",""),StdDlgVar("","AskedOutside", "==4"),
+                                                                                                                                												  											 !DlgObjVar("",gDialogue_HeardOfWitch,"")],														[StdDlgVar("Create","AskedWitchcraft","=1")]],
+            [7,[5,6,8,9,1,15,16,17,21,22,23,24],"Ganz schön mutig, das einem Fremden zu sagen.","Was habe ich schon zu verlieren? Ich laufe in Lumpen im Wald herum!",0,0,					0,											[StdDlgVar("!","AskedBrave",""),StdDlgVar("","AskedOutside", "==4")],							[StdDlgVar("Create","AskedBrave","=1")]],
+            [8,[5,6,7,9,1,15,16,17,21,22,23,24],"Wollt Ihr weiter im Wald wohnen?","Auf keinen Fall. Ich will zurück in mein Haus in der Stadt!",0,0,										[true,0,0,0,false,0,0,"HomeForWitches"],	[StdDlgQuestStage("Get","HomeForWitches","==1")],												["SetQuestStage(\"HomeForWitches\",gQuestHomeForWitchesStageFindEntry,pTarget,true)"]],
+            [9,[5,6,7,8,1,15,16,17,21,22,23,24],"Ich könnte Euch helfen, zurück in die Stadt zu kommen", "Ich wäre Euch zu großem Dank verpflichtet.",0,0,									[true,0,0,0,false,0,0,"HomeForWitches"],	[StdDlgQuestStage("Get","HomeForWitches","==1")],												["SetQuestStage(\"HomeForWitches\",gQuestHomeForWitchesStageFindEntry,pTarget,true)"]],
+         [15,[0,1],"Seid Ihr die Hexe, die im Wald wohnt?", "Ja, die bin ich *seufz*. Mir ist es lieber, wenn Ihr mich Alvelin nennt.",0,0,										0,											[StdDlgVar("","AskedOutside", "<4"),DlgObjVar("",gDialogue_HeardOfWitch,"")],					[StdDlgVar("Create","AskedOutside","=4")]],
+          [16,[15,17,1],"Was ist passiert?","Man beschuldigte mich, jemanden verflucht zu haben, da wurde ich von Odilbert aus der Stadt geworfen.",0,0,						0,											[StdDlgVar("!","AskedWitchcraft",""),StdDlgVar("","AskedOutside", "==4"),
+                                                                                                                                                        						  											 DlgObjVar("",gDialogue_HeardOfWitch,""),StdDlgQuestStage("Get","HomeForWitches","==0")],		[StdDlgVar("Create","AskedWitchcraft","=1"),"ActivateQuest(\"HomeForWitches\",pTarget)",StdDlgVar("Create","AskedOutside","=4")]],
+          [17,[15,16,1,0],"Habt Ihr Answin verflucht?","Nein, ganz sicher nicht! Aber der Trottel hätte mich fast mit einem Baum erschlagen. Da werde ich schonmal leicht ausgelassen.",0,0,0,								[StdDlgVar("!","AskedAnswin",""),DlgObjVar("",gDialogue_HeardOfWitch,"")],						[StdDlgVar("Create","AskedAnswin","=1"),StdDlgVar("Create","AskedOutside","=4")]],
+         [21,[0,1],"Habt Ihr zufällig eine Axt gefunden?","Hehe, ja, das habe ich. Aber ich habe dem Holzfäller noch nichts davon gesagt.",0,0,									[true,0,0,0,false,0,0,"Lumberjack"],		[StdDlgVar("!","AskedAxe",""),StdDlgQuestStage("Get","Lumberjack",">0")],						[StdDlgVar("Create","AskedAxe","=1")]],
+          [22,[5,6,7,8,9,1,15,16,17,21,23,24],"Wieso habt Ihr die Axt nicht zurückgegeben?", "Damit ich wieder fallenden Bäumen ausweichen darf? Nicht mit mir!",0,0,									[true,0,0,0,false,0,0,"Lumberjack"],		[StdDlgVar("","AskedAxe","==1"),StdDlgQuestStage("Get","Lumberjack",">0")],						[StdDlgVar("","AskedAxe","=2")]],
+          [23,[5,6,7,8,9,1,15,16,17,21,22,24],"Gebt Ihr mir die Axt?", "Gerne, aber erst wenn ich wieder in der Stadt wohne. Dann brauche ich mich auch nicht mehr vor fallenden Bäumen vorsehen.",0,0,	[true,0,0,0,false,0,0,"Lumberjack"],		[StdDlgVar("","AskedAxe",""),StdDlgQuestStage("Get","HomeForWitches","==0"),
+                                                                                                                                                                              	                                    		 StdDlgQuestStage("Get","Lumberjack",">0")],													[StdDlgVar("Create","AskedOutside","=4"), "ActivateQuest(\"HomeForWitches\",pTarget)","SetQuestStage(\"HomeForWitches\",gQuestHomeForWitchesStageFindEntry,pTarget,true)"]],
+          [24,[5,6,7,8,9,1,15,16,17,21,22,23],"Gebt Ihr mir die Axt?", "Gerne, Ihr kriegt sie als Belohnung, wenn Ihr mir mein altes Haus in der Stadt zurückbeschafft.",0,0,							[true,0,0,0,false,0,0,"HomeForWitches"],	[StdDlgVar("","AskedAxe",""),StdDlgQuestStage("Get","HomeForWitches","==1"),
+                                                                                                                                                    							                                        	 StdDlgQuestStage("Get","Lumberjack",">0")],													["SetQuestStage(\"HomeForWitches\",gQuestHomeForWitchesStageFindEntry,pTarget,true)"]],
+         [30,[0,1],"Bringt Ihr mir das Zaubern bei?","TODO",0,0,0],
+         [31,[0,1],"Was habt Ihr zu verkaufen?","TODO",0,0,0],
+ 		// OBW-Info
+ 		[40,[0,1], "Gibt es irgendwelche Neuigkeiten?", "Ich habe gehört, dass sich auf dem Land die Toten erheben. Es sollen ganz frische Leichen sein, und sie wandern auf den Feldern umher.", 0, 0, [true,0,0,0,false,0,0,"MainQuest"], [StdDlgQuestStage("Get","MainQuest","==gQuestMainStageSearch"), StdDlgVar("!","InfoOBW","")], StdDlgVar("Create","InfoOBW","=1", StdDlgVar("", "Cancel", "=0"), "gQuestMain_Info_Alvelin++")],
+ 		[41,40,"Hört sich gefährlich an...", "Kann sein. Manchmal erzählen die Bauern aber auch nur Unsinn.", 0, LMM2, 0, 0, StdDlgVar("","Cancel","=1")],
+
+		StdDlgArrayExitCancel()
 ];}
 
 
@@ -197,7 +214,7 @@ func MsgDialogueBernika() { return [
 		[20,[1,10,18,19,20], Format("{{FBRL}} Fische verkaufen %d{{GOLD}}",gFishBarrel_PriceFactor_Sell*GetValue(0,FBRL)/100), ["Danke.", "Gerne wieder!", "Habt Ihr noch mehr?"], 0, 0, 0, [StdDlgVar("","UnlockSellFish","==1"),"pTarget->~HasItem(FBRL)",StdDlgVar("","FishBarrel","=(pTarget->~HasItem(FBRL))")], [StdDlgVarSafeRemoveObject("FishBarrel"),Format("pTarget->~DoMoney(%d)",gFishBarrel_PriceFactor_Sell*GetValue(0,FBRL)/100)]],
 		// OBW-Info
 		[21,[0,1], "Ist in den letzten Tagen etwas merkwürdiges vorgefallen?", "Hmm, ja, tatsächlich. Ich habe gehört, dass von einem Tag auf den anderen die Bettler aus dem Nachbarort verschwunden sind.", 0, 0, [true,0,0,0,false,0,0,"MainQuest"], [StdDlgQuestStage("Get","MainQuest","==gQuestMainStageSearch"), StdDlgVar("!","InfoOBW","")], StdDlgVar("Create","InfoOBW","=1", StdDlgVar("", "Cancel", "=0"), "gQuestMain_Info_Bernika++")],
-		[22,21,"Weiter", "Erst waren sie da, dann waren sie weg... sogar der Lahme!", 0, LMM2, 0, 0, StdDlgVar("","Cancel","=1")],
+		[22,21,"Weiter", "Erst waren sie da, dann waren sie weg... sogar der Lahme!", 0, StdDlgIconContinue(), 0, 0, StdDlgVar("","Cancel","=1")],
 		// Ende
 		//StdDlgArrayExitAlways()
 		StdDlgArrayExitCancel()
@@ -248,27 +265,27 @@ func MsgDialogueHelmar() { return [
 		[0,-1,0,"Haltet mich nicht zu lange auf, ich bin im Dienst! Ach ja, ich bin Helmar der Wächter.",0,NONE,0,0,"SetStartDialogue(pSpeaker,1)"],
 		[1,-1,0,["Schön Euch wiederzusehen.","Seid gegrüßt!","Schön Euch zu sehen!"],0,MCMC],
 		 [2,[0,1],"Und, wie gehts?", "Ach gut, wie immer. Ich habe heute wieder einen Haufen Papiere kontrolliert, besser gehts nicht.",0,0,0],
-		  [3,2,"Weiter","So viele Leute gehen hier aus und ein, da bleibt mir manchmal nichts anders übrig, als die Papiere nur zu überfliegen",0,0,0],
-		   [4,3,"Weiter","Aber heute läuft es gut. Keine Messerstecherei am Tor, keine Diebe. Alles schön ruhig.",0,0,0],
-		    [5,4,"Weiter","Sowas kann aber auch täuschen... meinen Kumpel Bertram hat's erwischt, einen Tag vor dem Ruhestand! Könnt Ihr Euch das vorstellen?!",0,0,0],
-		     [6,5,"Weiter","Da kommt so ein Rabauke mit einem Einlassschein für eine Woche. Und der wollte nur einen Tag bleiben!",0,0,0],
-		      [7,6,"Weiter","Nur einen Tag! Könnt Ihr das glauben? Und der Schein gilt eine ganze Woche!",0,0,0],
-		       [8,7,"Weiter","Der gute Bertram konnte den natürlich nicht so einfach reinlassen. Wer nur einen Tag rein will, der braucht halt 'nen Tagesschein, so hat er gesagt.",0,0,0],
-		        [9,8,"Weiter","Also gut, meinte der Andere, dann bleib' ich halt 'ne Woche. So hat ihn der Bertram reingelassen. Hätt' er besser nicht gemacht...",0,0,0],
-		         [10,9,"Weiter","Es trug sich nämlich so zu, dass Unhold am Abend zurück kam und wieder aus der Stadt rauswollte!",0,0,0],
-		          [11,10,"Weiter","Dabei hat er doch gesagt, er bleibt die ganze Woche! Das konnte Bertram nicht so auf sich sitzen lassen.",0,0,0],
-		           [12,11,"Weiter","Also hat er gesagt: Wer 'ne Woche bleiben will, der bleibt auch! Und in dem Moment haben die Kollegen den Bertram zur Seite genommen, das war ein Glück."],
-		            [13,12,"Weiter","Ja zum Glück sag ich, denn sonst wäre es noch schlimmer gekommen. Sie nehmen den Bertram also zur Seite, und dann haben sie zu ihm gesagt..."],
-		        	 [14,13,"Weiter","... Bertram du alter Suffkopp, lass den Mann raus! Haben sie gesagt. Dann haben sie ihm 'ne ordentliche Abreibung verpasst und rausgeschmissen aus der Wachmannschaft."],
-		        	  [15,14,"Weiter","Ja und so kam es, dass es den Bertram einen Tag vor seinem Ruhestand erwischt hat. Zehn Jahre Dienst hätt' er noch gehabt! Zehn Jahre!"],
-		        	   [16,15,"Weiter","Aber die schmeißen ihn einfach raus..."],
+		  [3,2,"Weiter","So viele Leute gehen hier aus und ein, da bleibt mir manchmal nichts anders übrig, als die Papiere nur zu überfliegen",0,StdDlgIconContinue(),0],
+		   [4,3,"Weiter","Aber heute läuft es gut. Keine Messerstecherei am Tor, keine Diebe. Alles schön ruhig.",0,StdDlgIconContinue(),0],
+		    [5,4,"Weiter","Sowas kann aber auch täuschen... meinen Kumpel Bertram hat's erwischt, einen Tag vor dem Ruhestand! Könnt Ihr Euch das vorstellen?!",0,StdDlgIconContinue(),0],
+		     [6,5,"Weiter","Da kommt so ein Rabauke mit einem Einlassschein für eine Woche. Und der wollte nur einen Tag bleiben!",0,StdDlgIconContinue(),0],
+		      [7,6,"Weiter","Nur einen Tag! Könnt Ihr das glauben? Und der Schein gilt eine ganze Woche!",0,StdDlgIconContinue(),0],
+		       [8,7,"Weiter","Der gute Bertram konnte den natürlich nicht so einfach reinlassen. Wer nur einen Tag rein will, der braucht halt 'nen Tagesschein, so hat er gesagt.",0,StdDlgIconContinue(),0],
+		        [9,8,"Weiter","Also gut, meinte der Andere, dann bleib' ich halt 'ne Woche. So hat ihn der Bertram reingelassen. Hätt' er besser nicht gemacht...",0,StdDlgIconContinue(),0],
+		         [10,9,"Weiter","Es trug sich nämlich so zu, dass Unhold am Abend zurück kam und wieder aus der Stadt rauswollte!",0,StdDlgIconContinue(),0],
+		          [11,10,"Weiter","Dabei hat er doch gesagt, er bleibt die ganze Woche! Das konnte Bertram nicht so auf sich sitzen lassen.",0,StdDlgIconContinue(),0],
+		           [12,11,"Weiter","Also hat er gesagt: Wer 'ne Woche bleiben will, der bleibt auch! Und in dem Moment haben die Kollegen den Bertram zur Seite genommen, das war ein Glück.",0,StdDlgIconContinue()],
+		            [13,12,"Weiter","Ja zum Glück sag ich, denn sonst wäre es noch schlimmer gekommen. Sie nehmen den Bertram also zur Seite, und dann haben sie zu ihm gesagt...",0,StdDlgIconContinue()],
+		        	 [14,13,"Weiter","... Bertram du alter Suffkopp, lass den Mann raus! Haben sie gesagt. Dann haben sie ihm 'ne ordentliche Abreibung verpasst und rausgeschmissen aus der Wachmannschaft.",0,StdDlgIconContinue()],
+		        	  [15,14,"Weiter","Ja und so kam es, dass es den Bertram einen Tag vor seinem Ruhestand erwischt hat. Zehn Jahre Dienst hätt' er noch gehabt! Zehn Jahre!",0,StdDlgIconContinue()],
+		        	   [16,15,"Weiter","Aber die schmeißen ihn einfach raus...",0,StdDlgIconContinue(),0],
 		        	    [17,16,"Äh...","Unfasslich, nicht wahr? Meine Rede! Aber die Jungs habens gut gemacht."],
 		        	    [18,16,"Moment mal...", "... wenn er noch 10 Jahre zu dienen gehabt hätte, dann ist das nicht einen Tag vor dem Ruhestand."],
-		        	     [19,18,"Weiter","Ja aber sie haben ihn doch rausgeworfen! Vorzeitiger Ruhestand heißt das, gibts nur hier in der Wache."],
-		        	     [20,19,"Weiter","Wenn einer aufhört, rausgeschmissen wird, oder ins Gras beißt, dann ist das der Ruhestand."],
+		        	     [19,18,"Weiter","Ja aber sie haben ihn doch rausgeworfen! Vorzeitiger Ruhestand heißt das, gibts nur hier in der Wache.",0,StdDlgIconContinue()],
+		        	     [20,19,"Weiter","Wenn einer aufhört, rausgeschmissen wird, oder ins Gras beißt, dann ist das der Ruhestand.",0,StdDlgIconContinue()],
 		        	      [21,20,"Alles klar. Ich lass Euch mal in Ruhe hier stehen...","Ja vielen Dank, war ein nettes Gespräch."],
                         [22,16,"Und was macht Bertram jetzt?","Verschwunden ist er, abgehauen. Schade drum, aber es scheint ihm ganz gut zu gehen."],
-                         [23,22,"Weiter","Hab mal gehört, dass er ein eigenes Haus hat! Jeden Tag ein ordentliches Besäufnis, und bei den Dirnen im Nachbardorf hat er auch einen Ruf, der alte Hund."],
+                         [23,22,"Weiter","Hab mal gehört, dass er ein eigenes Haus hat! Jeden Tag ein ordentliches Besäufnis, und bei den Dirnen im Nachbardorf hat er auch einen Ruf, der alte Hund.",0,StdDlgIconContinue()],
 		StdDlgArrayExitAlways()
 ];}
 
@@ -303,8 +320,8 @@ func MsgDialogueRadulf() { return [
 		// der Dealer könnte der Typ in der Vorratskammer des Schlosses sein.
 		[18,[1,17],"Hier habt Ihr ein Brot","Brot? Zeigt Her!!",0,0,0,"pTarget->HasItem(BRED,1)",StdDlgVar("","Cancel","=0")],
 		  [19,18,"Und? Lecker?","Jaaa, Brot!! *mampf*",0,0,0],
-		    [20,19,"Weiter","Komisch... das ist überhaupt nicht so wie ich es mir vorgestellt habe.",0,0,0,0],
-		    [22,19,"Weiter","Komisch... das ist überhaupt nicht so wie ich es mir vorgestellt habe.",0,0,0,0], // hier eine Unterscheidung, ob pTarget klug genug ist, um Drogen zu vermuten
+		    [20,19,"Weiter","Komisch... das ist überhaupt nicht so wie ich es mir vorgestellt habe.",0,StdDlgIconContinue(),0,0],
+		    [22,19,"Weiter","Komisch... das ist überhaupt nicht so wie ich es mir vorgestellt habe.",0,StdDlgIconContinue(),0,0], // hier eine Unterscheidung, ob pTarget klug genug ist, um Drogen zu vermuten
 		      [21,[20,1],"Was meint Ihr?","Normalerweise fühle ich mich ganz gut und ohne Sorgen, wenn ich Brot gegessen habe.",0,0,0],
 		        [22,[21,22,1],"Es ist halt Brot.","Also in meinem Brot war irgendwas anders.",0,0,0], // jetzt sollten alle Chars die Möglichkeit haben, nach Drogen zu fragen
 		        [23,[21,22,1],"Komisch...","Das sollte ich mir mal ansehen.",0,0,0,0,"ActivateQuest(\"FunkyBread\",pTarget)"], // diesen Satz soll pTarget sagen!! Quest aktivieren
@@ -326,13 +343,13 @@ func MsgDialogueAnswin() { return [
 		    [5,[3,4,19],"Nicht direkt verloren?","Ja. Um genau zu sein, habe ich sie weggeworfen!",0,0,[true,0,0,0,false,0,0,"Lumberjack"],StdDlgVar("","Z","==0"),[StdDlgVar("","Cancel","=1"),StdDlgVar("Create","Z","=1")]],
 		      [6,[5,1,19],"Was? Weggeworfen?!","Ja, kennt ihr nicht die Legende?",0,0,[true,0,0,0,false,0,0,"Lumberjack"],[StdDlgVar("","B","==0"),StdDlgVar("","A",""),StdDlgVar("","Z","")],[StdDlgVar("Create","B","=1"),StdDlgVar("","Cancel","=0")]],
 		        [7,6,"Welche Legende?","Es gab da mal einen Holzfäller, dessen Axt wurde von einer Hexe verflucht.",0,0,[true,0,0,0,false,0,0,"Lumberjack",true]],
-				[8,7,"Weiter","Fortan traf die Axt keine Bäume mehr, sondern nur noch den Holzfäller.",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack",true]],
-				[9,8,"Weiter","Erst schlug er sich die Beine ab, grausig, und dann auch noch die Arme!",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack",true]],
-				[10,9,"Weiter","So kam es, dass alle seine Glieder durch Holz ersetzt wurden. So wurde der Holzfäller selbst zum Baum.",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack",true]],
-			      [11,10,"Was hat das mit Euch zu tun?","Kennt ihr die Hexe, die im Wald wohnt?",0,0,[true,0,0,0,false,0,0,"Lumberjack"],StdDlgVar("","A",""),0,0,[true,0,0,0,false,0,0,"Lumberjack",true]],
-					[12,11,"Weiter","Letztens hätte sie fast ein Baum erschlagen. Sie hat Kräuter gesucht und ist gerade noch weggesprungen.",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack"]],
-					[13,12,"Weiter","Da hat sie mich ganz böse angeschaut und irgendwas gemurmelt...",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack"]],
-					  [14,13,"Weiter","Erst habe ich mir nichts dabei gedacht, aber dann fiel mir die Legende wieder ein. Also habe ich die Axt in den Wald gepfeffert.",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack"],0,[StdDlgVar("","Cancel","=1"),StdDlgVar("Create","C","=1")]],
+				[8,7,"Weiter","Fortan traf die Axt keine Bäume mehr, sondern nur noch den Holzfäller.",0,StdDlgIconContinue(),[true,0,0,0,false,0,0,"Lumberjack",true]],
+				[9,8,"Weiter","Erst schlug er sich die Beine ab, grausig, und dann auch noch die Arme!",0,StdDlgIconContinue(),[true,0,0,0,false,0,0,"Lumberjack",true]],
+				[10,9,"Weiter","So kam es, dass alle seine Glieder durch Holz ersetzt wurden. So wurde der Holzfäller selbst zum Baum.",0,StdDlgIconContinue(),[true,0,0,0,false,0,0,"Lumberjack",true]],
+			      [11,10,"Was hat das mit Euch zu tun?","Kennt ihr die Hexe, die im Wald wohnt?",0,0,[true,0,0,0,false,0,0,"Lumberjack"],StdDlgVar("","A",""),[DlgObjVar("Create",gDialogue_HeardOfWitch, "=1")]],
+					[12,11,"Weiter","Letztens hätte sie fast ein Baum erschlagen. Sie hat Kräuter gesucht und ist gerade noch weggesprungen.",0,StdDlgIconContinue(),[true,0,0,0,false,0,0,"Lumberjack"]],
+					[13,12,"Weiter","Da hat sie mich ganz böse angeschaut und irgendwas gemurmelt...",0,StdDlgIconContinue(),[true,0,0,0,false,0,0,"Lumberjack"]],
+					  [14,13,"Weiter","Erst habe ich mir nichts dabei gedacht, aber dann fiel mir die Legende wieder ein. Also habe ich die Axt in den Wald gepfeffert.",0,StdDlgIconContinue(),[true,0,0,0,false,0,0,"Lumberjack"],0,[StdDlgVar("","Cancel","=1"),StdDlgVar("Create","C","=1")]],
 					  	  [15,[1,14,16,17,19],"Und jetzt?","Jetzt will ich meine Axt wieder haben. Sie war wohl doch nicht verflucht.",0,0,[true,0,0,0,false,0,0,"Lumberjack",true],[StdDlgVar("","C",""),StdDlgVar("","C2","==0")],StdDlgVar("Create","C2","=1")],
 					 	    [16,[1,14,15,17,19],"Nicht verflucht?","Die olle Hexe hat mich letztens gefragt wieso ich hier so rumstehe. Ich habe ihr alles erzählt, da hat sie mich ganz doll ausgelacht.",0,0,[true,0,0,0,false,0,0,"Lumberjack",true],[StdDlgVar("","D","==0"),StdDlgVar("","C2","")],StdDlgVar("Create","D","=1")],
 					 	  [17,[1,14,15,16,19],"Wieso kauft Ihr nicht eine neue Axt?","Sie ist mir halt so ans Herz gewachsen. Mit einer neuen Axt wäre die Arbeit nicht dieselbe.",0,0,[true,0,0,0,false,0,0,"Lumberjack"],[StdDlgVar("","E","==0"),StdDlgVar("","C","")],StdDlgVar("Create","E","=1")],
@@ -343,7 +360,7 @@ func MsgDialogueAnswin() { return [
 		//[21,[0,1,2],"Ist das Eure Axt? {{LAXE}}","Ja, tatsächlich, das ist sie!",0,0,[true,0,0,0,false,0,0,"Lumberjack"],[StdDlgVar("","A","",""),StdDlgVar("!","G",""),StdDlgVar("","AnswinsAxe","=(pTarget->~HasItem(LAXE))")],[StdDlgVar("","Cancel","=0"),StdDlgVar("Create","G","=1")]],
 		//  [22,21,"Weiter","Vielen Dank! Hier, für Eure Mühe.",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack",true],0,[StdDlgVar("","Cancel","=1"),StdDlgVar("RemoveObject(","AnswinsAxe",")"),"FinishQuest( \"Lumberjack\", pTarget, true)"]],
 		[21,[0,1,2],"Ist das Eure Axt? {{LAXE}}","Ja, tatsächlich, das ist sie!",0,0,[true,0,0,0,false,0,0,"Lumberjack"],[StdDlgVar("","A","",""),StdDlgVar("!","G",""),"gObjAnswinsAxe=(pTarget->~HasItem(LAXE))"],[StdDlgVar("","Cancel","=0"),StdDlgVar("Create","G","=1")]],
-		  [22,21,"Weiter","Vielen Dank! Hier, für Eure Mühe.",0,[LMM2,0,0,2,4],[true,0,0,0,false,0,0,"Lumberjack",true],0,[StdDlgVar("","Cancel","=1"),"SetQuestStage(\"Lumberjack\",2,pTarget,true)","!gObjAnswinsAxe||RemoveObject(gObjAnswinsAxe)"]],
+		  [22,21,"Weiter","Vielen Dank! Hier, für Eure Mühe.",0,StdDlgIconContinue(),[true,0,0,0,false,0,0,"Lumberjack",true],0,[StdDlgVar("","Cancel","=1"),"SetQuestStage(\"Lumberjack\",2,pTarget,true)","!gObjAnswinsAxe||RemoveObject(gObjAnswinsAxe)"]],
 
 		StdDlgArrayExitCancel()
 ];}
@@ -357,7 +374,7 @@ func MsgDialogueAnswinsAxe() { return [
         [1,-1,0,"Eine schartige Axt...",-1,MCMC,0,0,["SetStartDialogueEx(2)","StopDialogue(pTarget)"]],
         [2,-1,0,"Damit kann man sicher gut Bäume fällen.",-1,MCMC,0,0,["SetStartDialogueEx(3)","StopDialogue(pTarget)"]],
 		[3,-1,0,"Hmm... auf dem Schaft ist etwas eingeritzt...",-1,MCMC],
-		  [4,3,"Weiter","Answin",0,[LMM2,0,0,2,4],0,0,[]],
+		  [4,3,"Weiter","Answin",0,StdDlgIconContinue(),0,0,[]],
 
 		//[9,-1,"Abbrechen","",0,[MCMX,0,0,0,0,-1],-1,0,"StopDialogue(pTarget)"]
 		StdDlgArrayExitAlways()

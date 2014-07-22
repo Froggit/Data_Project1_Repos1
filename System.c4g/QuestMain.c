@@ -5,6 +5,8 @@
 static const gQuestMainStageSearch = 23;
 
 static gQuestMain_Info_Bernika;
+static gQuestMain_Info_Alvelin;
+static gQuestMain_Info_Armin;
 
 func CreateQuests()
 {

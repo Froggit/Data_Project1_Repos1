@@ -54,13 +54,13 @@ func DoStartSzen()
 	// Hexe erstellen
 	gNPCWitch = CreateObject( CLNK,0,0,giPlrFriend );
 	MakeCrewMember( gNPCWitch, giPlrFriend );
-	gNPCWitch->~SetName("Hexe");
+	gNPCWitch->~SetName("Frau");
 	gNPCWitch->~SetPosition(1170,750);
 	AttachDialogue(gNPCWitch,"Alvelin");
 
 	// Schmied erstellen
 	gNPCBlacksmith = CreateObject( CLNK,0,0,giPlrFriend );
-	MakeCrewMember( gNPCFarmer, giPlrFriend );
+	MakeCrewMember( gNPCBlacksmith, giPlrFriend );
 	gNPCBlacksmith->~SetName("Heinz");
 	gNPCBlacksmith->~SetPosition(1515,770);
 	AttachDialogue(gNPCBlacksmith,"Heinz");
