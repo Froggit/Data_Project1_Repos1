@@ -43,7 +43,7 @@ func DscQuestMainQuest( bool bPhases )
 			// die Quest Startet: Intro abspielen
 			// Teil 1: Einfaden
 			[1,"true",	[
-			          	"SetTime(0,20,0,0)", // es ist 20 Uhr
+			          	"SetTime(0,23,0,0)", // es ist 23 Uhr
 			          	"CreateObject(_SUL,160,650,-1)",
 						"StartFilm()",
 						"GetFilm()->PosCam(pActivePlayer,0,true)",

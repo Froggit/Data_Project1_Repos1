@@ -39,7 +39,7 @@ func DoStartSzen()
 	// Glühwürmchen erstellen
 
 	CreateObject(FFAC, 627, 705, -1);
-	CreateObject(FFAC, 1905, 750, -1);
+	CreateObject(FFAC, 1905, 770, -1);
 	CreateObject(FFAC, 2170, 745, -1);
 	CreateObject(FFAC, 2675, 490, -1);
 
@@ -57,6 +57,8 @@ func DoStartSzen()
 	gNPCWitch->~SetName("Frau");
 	gNPCWitch->~SetPosition(1170,750);
 	AttachDialogue(gNPCWitch,"Alvelin");
+	CreateContents(TIM1,gNPCWitch); // a dummy such that he does not collect the last barrel after ejecting it
+	CreateContents(LAXE,gNPCWitch); // lumberjack's axe for looting the witch
 
 	// Schmied erstellen
 	gNPCBlacksmith = CreateObject( CLNK,0,0,giPlrFriend );
@@ -99,6 +101,7 @@ func DoStartSzen()
 	gNPCFarmer->~SetName("Armin");
 	gNPCFarmer->SetPosition(1840,765);
 	AttachDialogue(gNPCFarmer,"Armin");
+	AttachDayNightCycle(gNPCFarmer,"Armin");
 	CreateContents(TIM1,gNPCFarmer); // a dummy such that he does not collect items
 
 	// Wirtin erstellen

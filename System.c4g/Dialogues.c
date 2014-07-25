@@ -180,10 +180,10 @@ func MsgDialogueArmin() { return [
 		    [7,[0,1,2,5],"Ich werde es bezwingen!","",0,0,-1,["GetQuestStage(\"HuskyHunt\",pTarget)",StdDlgVar("!","B","")],[StdDlgVar("Create","B","=1"),StdDlgVar("","Cancel","=1"),"StopDialogue(pTarget)"]],
 		// Belohnung für die Husky-Quest
 		//"Da hast was zum Essn, des war sicha a mords Abeit."
-		[17,[0,1],"Das Tier ist tot!","Sauba! Do hast was zum Essen, des war sicha a mords Abeit. Konnst no öfta wos ham...",0,0,0,[StdDlgQuestStage("Get","HuskyHunt","==gQuestStageFinished"),StdDlgVar("!","UnlockReward","")],[StdDlgVar("Create","UnlockReward","=1"), StdDlgVar("","DayLastReward","=days"), "gNPCFarmer->~Exit(CreateContents(RMET,gNPCFarmer),0,5)"]],
-		[18,[0,1],"Kriege ich noch was zu essen?","Ja, i hob grad wos da.",0,0,0,["days%2 == 0",StdDlgVar("","UnlockReward","==1"),StdDlgVar("","DayLastReward","!=days")],[StdDlgVar("","DayLastReward","=days"), "Exit(CreateContents(RMET,gNPCFarmer),0,5)"]],
-		[18,[0,1],"Kriege ich noch was zu essen?","Na, heid net. Moagn wieda.",0,0,0,["days%2 == 1",StdDlgVar("","UnlockReward","==1")],["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
-		[19,[0,1],"Kriege ich noch was zu essen?","Na, du host heid scho was kriagt!",0,0,0,["days%2 == 0", StdDlgVar("","UnlockReward","==1"),StdDlgVar("","DayLastReward","==days")],["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
+		[17,[0,1],"Das Tier ist tot!","Sauba! Do hast was zum Essen, des war sicha a mords Abeit. Konnst no öfta wos ham...",0,0,0,[StdDlgQuestStage("Get","HuskyHunt","==gQuestStageFinished"),StdDlgVar("!","UnlockReward","")],[StdDlgVar("Create","UnlockReward","=1"), StdDlgVar("","DayLastReward","=time_days"), "gNPCFarmer->~Exit(CreateContents(RMET,gNPCFarmer),0,5)"]],
+		[18,[0,1],"Kriege ich noch was zu essen?","Ja, i hob grad wos da.",0,0,0,["time_days%2 == 0",StdDlgVar("","UnlockReward","==1"),StdDlgVar("","DayLastReward","!=time_days")],[StdDlgVar("","DayLastReward","=time_days"), "Exit(CreateContents(RMET,gNPCFarmer),0,5)"]],
+		[18,[0,1],"Kriege ich noch was zu essen?","Na, heid net. Moagn wieda.",0,0,0,["time_days%2 == 1",StdDlgVar("","UnlockReward","==1")],["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
+		[19,[0,1],"Kriege ich noch was zu essen?","Na, du host heid scho was kriagt!",0,0,0,["time_days%2 == 0", StdDlgVar("","UnlockReward","==1"),StdDlgVar("","DayLastReward","==time_days")],["StopDialogue(pTarget)","StartDialogue(pTarget)"]],
 		// OBW-Info
 		[21,[0,1], "Ist sonst etwas besonderes passiert?", "Scho... D'Vegl fliang zur a Inse' im Himme'. Des host no ned gseng, oda?", 0, 0, [true,0,0,0,false,0,0,"MainQuest"], [StdDlgQuestStage("Get","MainQuest","==gQuestMainStageSearch"),StdDlgQuestStage("Get","HuskyHunt","<0"), StdDlgVar("!","InfoOBW","")], [StdDlgVar("Create","InfoOBW","=1", StdDlgVar("", "Cancel", "=0"), "gQuestMain_Info_Armin++")]],
 		[22,21,"Insel im Himmel?", "Interessant...", -1, 0, [true,0,0,0,false,0,0,"MainQuest"], 0, StdDlgVar("","Cancel","=1")],
@@ -193,10 +193,10 @@ func MsgDialogueArmin() { return [
 func MsgDialogueBernika() { return [
 		[0,-1,0,"Hallo, ich bin die Wirtin Bernika",0,NONE,0,0,["SetStartDialogue(pSpeaker,1)",StdDlgVar("Create","FishBarrel","=0"),StdDlgVar("Create","Cancel","=1")]],
 		[1,-1,0,["Schön Euch wiederzusehen.","Seid gegrüßt!","Schön Euch zu sehen!"],0,MCMC],
-		[2,[0,1],"Was habt Ihr denn auf der Speisekarte?","Heute haben wir Spanferkel oder Rinderbraten. Dazu könnt Ihr euch so viel Sauerkraut, Brot, Schmalz und Suppe nehmen, wie Ihr wollt.",0,0,0,["days%3 == 0"]],
-		[3,[0,1],"Was habt Ihr denn auf der Speisekarte?","Ich kann euch Schweinerippchen empfehlen, außerdem haben wir heute Rindereintopf. Nehmt euch so viel Brot, Grütze oder Kohl dazu, wie Euch beliebt.",0,0,0,["days%3 == 1"]],
-		[4,[0,1],"Was habt Ihr denn auf der Speisekarte?","Wie wäre es mit Schweinegeschnetzeltem oder einer saftigen Rinderkeule? Als Beilage gibt es so viel Suppe, Brei und gekochte Möhren, wie Ihr essen könnt.",0,0,0,["days%3 == 2"]],
-		[5,[0,1],"Was habt Ihr denn auf der Speisekarte?","Bei uns gibt es heute Schweineschulter und Rinderhackbraten. Außerdem haben wir Brot, Schmalz und einen Bierschinken.",0,0,0,["days%3 == 3"]],
+		[2,[0,1],"Was habt Ihr denn auf der Speisekarte?","Heute haben wir Spanferkel oder Rinderbraten. Dazu könnt Ihr euch so viel Sauerkraut, Brot, Schmalz und Suppe nehmen, wie Ihr wollt.",0,0,0,["time_days%3 == 0"]],
+		[3,[0,1],"Was habt Ihr denn auf der Speisekarte?","Ich kann euch Schweinerippchen empfehlen, außerdem haben wir heute Rindereintopf. Nehmt euch so viel Brot, Grütze oder Kohl dazu, wie Euch beliebt.",0,0,0,["time_days%3 == 1"]],
+		[4,[0,1],"Was habt Ihr denn auf der Speisekarte?","Wie wäre es mit Schweinegeschnetzeltem oder einer saftigen Rinderkeule? Als Beilage gibt es so viel Suppe, Brei und gekochte Möhren, wie Ihr essen könnt.",0,0,0,["time_days%3 == 2"]],
+		[5,[0,1],"Was habt Ihr denn auf der Speisekarte?","Bei uns gibt es heute Schweineschulter und Rinderhackbraten. Außerdem haben wir Brot, Schmalz und einen Bierschinken.",0,0,0,["time_days%3 == 3"]],
 		[6,[2,3,4,5],"Dann nehme ich das Schweinegericht.",""],
 		[7,[2,3,4,5],"Das Rind hört sich gut an.",""],
 		// Fisch-Quest
@@ -239,9 +239,9 @@ func MsgDialogueRovena() { return [
 			[15,[1,8],"Hmm, ich wäre an Euren Diensten interessiert","Schön, tretet ein!",0,0,0,StdDlgVar("","A",">3")],
 			[7,[1,2,3,4,5],"Ihr seid eine Dirne?","Ganz genau. Mit Zertifikat!",0,0,[true,0,0,0,false,0,0,"Whipped"],StdDlgVar("","A","<5"),[StdDlgVar("","A","=5"),StdDlgVar("","Cancel","=0")]],
 			  [8,7,"Zertifikat?","Königliche Siechenkontrolle. Ich halte die Vorschriften ein, dafür zahle ich weniger Steuer.",0,0,0,0,StdDlgVar("","Cancel","=1")],
-			[9,[1,8],"Kann ich etwas für Euch tun?","Ihr für mich? Das ist ungewöhnlich. Kommt am besten morgen wieder, bis dahin habe ich mir etwas überlegt.",0,0,0,[StdDlgVar("","B","==0"),StdDlgVar("","A",">=4")],[StdDlgVar("Create","B","=1"),StdDlgVar("Create","Days","=days+1")]], // DlgVar = dsys, days+1 usw;
-			  [10,[1,9],"Nun, wie kann ich helfen?","Ich überlege noch. Kommt morgen wieder.",0,0,0,["days < DlgVar(\"Days\",pTarget,pSpeaker)",StdDlgVar("","B",""),StdDlgVar("","C","==0")] ],
-			  [11,1,"Nun, wie kann ich helfen?","Es gibt da tatsächlich etwas, das Ihr für mich tun könnt!",0,0,[true,0,0,0,false,0,0,"Whipped"],["days >= DlgVar(\"Days\",pTarget,pSpeaker)",StdDlgVar("","B",""),StdDlgVar("","C","==0")],[StdDlgVar("Create","C","=1"),StdDlgVar("","Cancel","=0")]],
+			[9,[1,8],"Kann ich etwas für Euch tun?","Ihr für mich? Das ist ungewöhnlich. Kommt am besten morgen wieder, bis dahin habe ich mir etwas überlegt.",0,0,0,[StdDlgVar("","B","==0"),StdDlgVar("","A",">=4")],[StdDlgVar("Create","B","=1"),StdDlgVar("Create","Days","=time_days+1")]], // DlgVar = dsys, time_days+1 usw;
+			  [10,[1,9],"Nun, wie kann ich helfen?","Ich überlege noch. Kommt morgen wieder.",0,0,0,["time_days < DlgVar(\"Days\",pTarget,pSpeaker)",StdDlgVar("","B",""),StdDlgVar("","C","==0")] ],
+			  [11,1,"Nun, wie kann ich helfen?","Es gibt da tatsächlich etwas, das Ihr für mich tun könnt!",0,0,[true,0,0,0,false,0,0,"Whipped"],["time_days >= DlgVar(\"Days\",pTarget,pSpeaker)",StdDlgVar("","B",""),StdDlgVar("","C","==0")],[StdDlgVar("Create","C","=1"),StdDlgVar("","Cancel","=0")]],
 			    [12,11,"Ja?","Könnt Ihr mir eine Peitsche bringen?",0,0,[true,0,0,0,false,0,0,"Whipped"],StdDlgVar("","C","")],
 			  	  [13,12,"Eine Peitsche?! Wofür braucht Ihr die denn?","Manche meiner Kunden haben einfach ausgefallene Wünsche.",0,0,[true,0,0,0,false,0,0,"Whipped"],[StdDlgVar("","C",""),StdDlgVar("","D","==0")],[StdDlgVar("","Cancel","=1"),StdDlgVar("Create","D","=1")]],
 			        [14,[1,13],"Alles klar, ich suche Euch eine Peitsche.","Na dann! *zwinker*",0,0,[true,0,0,0,false,0,0,"Whipped"],["GetQuestStage(\"Whipped\",pTarget)==0",StdDlgVar("","D","")],"ActivateQuest(\"Whipped\",pTarget)"],
